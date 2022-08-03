@@ -1,14 +1,19 @@
 import React from 'react'
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const Sidebar = () => {
+
+  const navigate = useNavigate()
     return (
-        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundColor: 'yellow', height:'100%'}}>
+        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundColor: 'gray', height:'100%', justifyContent:'center'}}>
             <Navigation
               activeItemId="/management/members"
+
               onSelect={({itemId}) => {
-                // maybe push to the route
+                navigate(itemId)
               }}
               items={[
                 {
@@ -16,28 +21,13 @@ const Sidebar = () => {
                   itemId: '/dashboard',
                 },
                 {
-                  title: 'Management',
-                  itemId: '/management',
-                  subNav: [
-                    {
-                      title: 'Projects',
-                      itemId: '/management/projects',
-                    },
-                    {
-                      title: 'Members',
-                      itemId: '/management/members',
-                    },
-                  ],
+                  title: 'Expense',
+                  itemId: '/expense',
                 },
                 {
-                  title: 'Another Item',
-                  itemId: '/another',
-                  subNav: [
-                    {
-                      title: 'Teams',
-                      itemId: '/management/teams',
-                    },
-                  ],
+                  title: 'Income',
+                  itemId: '/income',
+  
                 },
               ]}
             />

@@ -1,15 +1,15 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom';
 const PublicRoute = (props) => {
     const Component = props.component
-    console.log(Component)
+
+    console.log(props)
   return (
     
     <div>
-        {props.isLoggedIn ?  'noooo' : <Component/>}
+        {props.isLoggedIn ?  'noooo' : <Component data={props}/>}
         
     </div>
-    
+
     
   )
 }

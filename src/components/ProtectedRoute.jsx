@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom';
+
 
 const ProtectedRoute = (props) => {
     const Component = props.component
@@ -8,7 +8,7 @@ const ProtectedRoute = (props) => {
     return (
     
     <div>
-        {props.isLoggedIn ? <Component/> : <Redirect to='/login'/>}
+        {props.isLoggedIn ? <Component data={props}/> : '<Redirect to'}
         
     </div>
        

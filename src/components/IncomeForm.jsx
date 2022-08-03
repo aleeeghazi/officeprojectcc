@@ -40,25 +40,21 @@ const styles = theme => ({
   });
   const countries = [
     {
-      value: "transportation",
-      label: "Transport"
+      value: "salary",
+      label: "Salary"
     },
     {
-      value: "housing",
-      label: "Home"
+      value: "pension",
+      label: "Pension"
     },
     {
-      value: "food",
-      label: "Food"
-    },
-    {
-      value: "miscellaneous",
-      label: "Miscellaneous"
+      value: "rent",
+      label: "Rent"
     },
   
   ];
 
-const ExpenseForm = (props) => {
+const IncomeForm = (props) => {
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
@@ -72,7 +68,7 @@ const ExpenseForm = (props) => {
     user:props.user.userId
   }
     const clickHandler= async ()=>{
-      const res = await axios.post("http://localhost:5000/api/expense",data,{
+      const res = await axios.post("http://localhost:5000/api/income",data,{
         headers:{
           "auth-token": props.user.token
         }
@@ -80,7 +76,7 @@ const ExpenseForm = (props) => {
       if(res.status===200){
         props.setOpenModal(false)
       }
-      console.log(res)
+      console.log(res.data)
     }
 
   return (
@@ -97,7 +93,7 @@ const ExpenseForm = (props) => {
             <Grid container direction="row" className={styles.mainHeader}>
               <Grid item xs={12}>
                 <Typography className={styles.primaryColor} variant="h5">
-                  Expense Form
+                  Income Form
                 </Typography>
               </Grid>
 
@@ -158,7 +154,7 @@ const ExpenseForm = (props) => {
                 />
               </Grid>
               <Grid item xs={12} style={{textAlign:'center'}}>
-                <Button variant="outlined" onClick={clickHandler}>Outlined</Button>
+                <Button variant="outlined" onClick={clickHandler}>Create</Button>
               </Grid>
 
             </Grid>
@@ -169,4 +165,4 @@ const ExpenseForm = (props) => {
   )
 }
 
-export default ExpenseForm
+export default IncomeForm
