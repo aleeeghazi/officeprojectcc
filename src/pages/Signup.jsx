@@ -37,7 +37,7 @@ const Signup = () => {
       pattern: "^[\\w]{6,}$",
     },
     {
-      id: 1,
+      id: 3,
       name: "username",
       type: "text",
       placeholder: "Username",

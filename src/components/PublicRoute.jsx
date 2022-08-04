@@ -6,7 +6,7 @@ const PublicRoute = (props) => {
   return (
     
     <div>
-        {props.isLoggedIn ?  'noooo' : <Component data={props}/>}
+        {!props.isLoggedIn && <Component data={props}/>}
         
     </div>
 

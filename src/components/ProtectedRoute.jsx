@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = (props) => {
     const Component = props.component
@@ -8,7 +8,7 @@ const ProtectedRoute = (props) => {
     return (
     
     <div>
-        {props.isLoggedIn ? <Component data={props}/> : '<Redirect to'}
+        {props.isLoggedIn ? <Component data={props}/> : <Navigate to='/login'/>}
         
     </div>
        

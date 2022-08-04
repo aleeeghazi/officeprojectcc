@@ -3,35 +3,36 @@ import IncomeForm from '../components/IncomeForm'
 import Button from "@material-ui/core/Button";
 import axios from 'axios';
 import BasicTable from '../components/Table.jsx';
+import CategoryForm from '../components/CategoryForm';
 
-const Income = (props) => {
+const Category= (props) => {
   const [openModal,setOpenModal] = useState(false)
-  const [incomeArr, setIncomeArr] = useState([])
-  const getIncomeData = async() => {
-    const res = await axios.get(`http://localhost:5000/api/income/${props.data.user.userId}`,{
+  const [categoryArr, setCategoryArr] = useState([])
+  const getCategoryData = async() => {
+    const res = await axios.get(`http://localhost:5000/api/category/${props.data.user.userId}`,{
       headers:{
         "auth-token": props.data.user.token
       }
     })
     if(res.status===200){
-      setIncomeArr(res.data)
+      setCategoryArr(res.data)
     }
     console.log(res.data)
   }
   useEffect(()=>{
-    getIncomeData()
+    getCategoryData()
   },[openModal])
   return (
     <div style={{padding:20, display:'flex',flexDirection:'column'}}>
     <div style={{padding:20, display:'flex', justifyContent:'flex-end'}}>
-      <Button onClick={()=>setOpenModal(!openModal)}>Add new Income</Button>
+      <Button onClick={()=>setOpenModal(!openModal)}>Add new Category</Button>
     </div>
-    <IncomeForm openModal={openModal} setOpenModal={setOpenModal} user={props.data.user}/>
+    <CategoryForm openModal={openModal} setOpenModal={setOpenModal} user={props.data.user}/>
     <div>
-      <BasicTable data={incomeArr} type='income'/>
+      <BasicTable data={categoryArr} type='category'/>
     </div>
   </div>
   )
 }
 
-export default Income
+export default Category

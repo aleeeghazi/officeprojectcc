@@ -5,6 +5,7 @@ import ExpenseForm from './components/ExpenseForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 import Sidebar from './components/Sidebar';
+import Category from './pages/Category';
 import Dashboard from './pages/Dashboard';
 import Expense from './pages/Expense';
 import Income from './pages/Income';
@@ -26,7 +27,7 @@ const App =()=>{
           <Route path='/dashboard' element={<ProtectedRoute component={Dashboard} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
           <Route path='/expense' element={<ProtectedRoute component={Expense} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
           <Route path='/income' element={<ProtectedRoute component={Income} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
-
+          <Route path='/category' element={<ProtectedRoute component={Category} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
         </Routes>
       </div>
 

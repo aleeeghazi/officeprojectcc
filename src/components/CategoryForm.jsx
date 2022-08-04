@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { withStyles, MenuItem } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -38,25 +38,34 @@ const styles = theme => ({
       backgroundColor: grey[200]
     }
   });
+  const categoryTypes = [
+    {
+      value: "income",
+      label: "Income"
+    },
+    {
+      value: "expense",
+      label: "Expense"
+    },
+  
+  ];
 
 
-const IncomeForm = (props) => {
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
+const CategoryForm = (props) => {
+    const [threshold, setThreshold] = useState('');
     const [category, setCategory] = useState('');
-    const [categoryOptions, setCategoryOptions] = useState([]);
+    const [categoryType, setCategoryType] = useState('');
 
-
- console.log(amount, category)
+ console.log(threshold, category)
   const data={
-    description,
-    amount,
-    category,
-    date: Date.now(),
+    threshold,
+    name:category,
+    type:categoryType,
+    createdAt: Date.now(),
     user:props.user.userId
   }
     const clickHandler= async ()=>{
-      const res = await axios.post("http://localhost:5000/api/income",data,{
+      const res = await axios.post("http://localhost:5000/api/category",data,{
         headers:{
           "auth-token": props.user.token
         }
@@ -66,24 +75,6 @@ const IncomeForm = (props) => {
       }
       console.log(res.data)
     }
-    const getUserCategories = async () =>{
-        const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/income`,data,{
-          headers:{
-            "auth-token": props.user.token
-          }
-        })
-        if(res.status===200){
-          setCategoryOptions(res.data)
-        }
-      }
-      useEffect(()=>{
-        setDescription('')
-        setCategory('')
-        setAmount('')
-        if(props.openModal){
-          getUserCategories()
-        }
-      }, [props.openModal])
 
   return (
     <Dialog
@@ -99,7 +90,7 @@ const IncomeForm = (props) => {
             <Grid container direction="row" className={styles.mainHeader}>
               <Grid item xs={12}>
                 <Typography className={styles.primaryColor} variant="h5">
-                  Income Form
+                  Category Form
                 </Typography>
               </Grid>
 
@@ -112,7 +103,16 @@ const IncomeForm = (props) => {
             >
 
               <Grid item xs={12}>
-                <Divider />
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  variant="outlined"
+                  label="Category Name"
+                  onChange={(e)=>setCategory(e.target.value)}
+                  value={category}
+
+                  id="category"
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -121,15 +121,14 @@ const IncomeForm = (props) => {
                   fullWidth
                   select
                   variant="outlined"
-                  value={category}
-                  onChange={(e)=>setCategory(e.target.value)}
-                  id="country"
+                  value={categoryType}
+                  onChange={(e)=>setCategoryType(e.target.value)}
+                  id="categoryType"
                   margin="dense"
-                  helperText="Please select category"
                 >
-                  {categoryOptions.map(option => (
-                    <MenuItem key={option._id} value={option._id}>
-                      {option.name}
+                  {categoryTypes.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -138,25 +137,13 @@ const IncomeForm = (props) => {
                 <TextField
                   fullWidth
                   margin="dense"
-                  variant="outlined"
-                  label="Description"
-                  onChange={(e)=>setDescription(e.target.value)}
-                  value={description}
-
-                  id="description"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  margin="dense"
                   inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} 
                   variant="outlined"
-                  label="Amount"
-                  value={amount}
+                  label="Threshold Value"
+                  value={threshold}
 
-                  onChange={(e)=>setAmount(e.target.value)}
-                  id="amount"
+                  onChange={(e)=>setThreshold(e.target.value)}
+                  id="threshold"
                 />
               </Grid>
               <Grid item xs={12} style={{textAlign:'center'}}>
@@ -171,4 +158,4 @@ const IncomeForm = (props) => {
   )
 }
 
-export default IncomeForm
+export default CategoryForm

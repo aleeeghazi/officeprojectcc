@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ExpenseForm from '../components/ExpenseForm'
 import ExpenseFilter from '../components/ExpenseFilter'
 import Button from "@material-ui/core/Button";
-import CustomizedTables from '../components/ExpenseTable';
+import CustomizedTables from '../components/Table';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ const Expense = (props) => {
       </div>
       <ExpenseForm openModal={openModal} setOpenModal={setOpenModal} user={props.data.user}/>
       <div>
-        <CustomizedTables expenseArr={filteredExpenses}/>
+        <CustomizedTables data={filteredExpenses} type='expense'/>
       </div>
     </div>
   )

@@ -29,6 +29,12 @@ const Sidebar = () => {
                   itemId: '/income',
   
                 },
+                {
+                  title: 'Categories',
+                  itemId: '/category',
+  
+                }
+                
               ]}
             />
         </div>

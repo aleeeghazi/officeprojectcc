@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withStyles, MenuItem } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -38,32 +38,16 @@ const styles = theme => ({
       backgroundColor: grey[200]
     }
   });
-  const countries = [
-    {
-      value: "transportation",
-      label: "Transport"
-    },
-    {
-      value: "housing",
-      label: "Home"
-    },
-    {
-      value: "food",
-      label: "Food"
-    },
-    {
-      value: "miscellaneous",
-      label: "Miscellaneous"
-    },
-  
-  ];
+
 
 const ExpenseForm = (props) => {
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
+    const [categoryOptions, setCategoryOptions] = useState([]);
 
- console.log(amount, category)
+
+ console.log( props)
   const data={
     description,
     amount,
@@ -82,6 +66,24 @@ const ExpenseForm = (props) => {
       }
       console.log(res)
     }
+    const getUserCategories = async () =>{
+      const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/expense`,data,{
+        headers:{
+          "auth-token": props.user.token
+        }
+      })
+      if(res.status===200){
+        setCategoryOptions(res.data)
+      }
+    }
+    useEffect(()=>{
+      setDescription('')
+      setCategory('')
+      setAmount('')
+      if(props.openModal){
+        getUserCategories()
+      }
+    }, [props.openModal])
 
   return (
     <Dialog
@@ -125,9 +127,9 @@ const ExpenseForm = (props) => {
                   margin="dense"
                   helperText="Please select category"
                 >
-                  {countries.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
+                  {categoryOptions.map(option => (
+                    <MenuItem key={option._id} value={option._id}>
+                      {option.name}
                     </MenuItem>
                   ))}
                 </TextField>
