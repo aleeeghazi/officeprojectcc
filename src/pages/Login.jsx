@@ -2,7 +2,9 @@ import React,{ useState } from "react";
 import FormInput from "../components/FormInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import { logInStart } from "../store/auth/authActions";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Login = (props) => {
   const [values, setValues] = useState({
@@ -10,12 +12,18 @@ const Login = (props) => {
     password: "",
   });
 
-
+// const user = useSelector(state=>state.auth.currentUser)
   const { email, password } = values;
+// console.log(user)
+  // const navigate = useNavigate();
 
-  const navigate = useNavigate();
-
-
+const dispatch = useDispatch()
+// useEffect(()=>{
+//   if (user){
+//     console.log(user)
+//     navigate('/expense')
+//   }
+// }, [user])
   const inputs = [
     {
       id: 1,
@@ -44,14 +52,8 @@ const Login = (props) => {
       password,
     };
     console.log(userData)
-    const res = await axios.post("http://localhost:5000/api/auth/login", userData)
-    console.log(res.data)
-    console.log("===============",props.data)
-    if (res.data.success==true){
-      props.data.setIsLoggedIn(true)
-      props.data.setUser(res.data)
-      navigate('/expense')
-    }
+    dispatch(logInStart(userData))
+  
   };
 
   const onChange = (e) => {

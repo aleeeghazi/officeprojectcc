@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { teal, grey } from "@material-ui/core/colors";
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { createCategoryStart } from '../store/category/categoryActions';
 
 
 const styles = theme => ({
@@ -55,7 +57,7 @@ const CategoryForm = (props) => {
     const [threshold, setThreshold] = useState('');
     const [category, setCategory] = useState('');
     const [categoryType, setCategoryType] = useState('');
-
+    const dispatch = useDispatch()
  console.log(threshold, category)
   const data={
     threshold,
@@ -65,15 +67,7 @@ const CategoryForm = (props) => {
     user:props.user.userId
   }
     const clickHandler= async ()=>{
-      const res = await axios.post("http://localhost:5000/api/category",data,{
-        headers:{
-          "auth-token": props.user.token
-        }
-      })
-      if(res.status===200){
-        props.setOpenModal(false)
-      }
-      console.log(res.data)
+      dispatch(createCategoryStart(data,props.user.token))
     }
 
   return (

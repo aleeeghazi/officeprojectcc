@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { teal, grey } from "@material-ui/core/colors";
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { createExpenseStart } from '../store/expense/expenseActions';
 
 
 const styles = theme => ({
@@ -45,26 +47,20 @@ const ExpenseForm = (props) => {
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
+    const user = useSelector(state=>state.auth.currentUser.user)
+    const expenseArr = useSelector(state=>state.expense.expenseArr)
+    const dispatch = useDispatch()
+ console.log(user)
 
-
- console.log( props)
   const data={
     description,
     amount,
     category,
     date: Date.now(),
-    user:props.user.userId
+    user:user.userId
   }
     const clickHandler= async ()=>{
-      const res = await axios.post("http://localhost:5000/api/expense",data,{
-        headers:{
-          "auth-token": props.user.token
-        }
-      })
-      if(res.status===200){
-        props.setOpenModal(false)
-      }
-      console.log(res)
+      dispatch(createExpenseStart(data,user.token))
     }
     const getUserCategories = async () =>{
       const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/expense`,data,{
@@ -84,7 +80,6 @@ const ExpenseForm = (props) => {
         getUserCategories()
       }
     }, [props.openModal])
-
   return (
     <Dialog
       className={styles.root}

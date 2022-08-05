@@ -3,20 +3,18 @@ import IncomeForm from '../components/IncomeForm'
 import Button from "@material-ui/core/Button";
 import axios from 'axios';
 import BasicTable from '../components/Table.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIncomeStart } from '../store/income/incomeActions';
 
 const Income = (props) => {
   const [openModal,setOpenModal] = useState(false)
-  const [incomeArr, setIncomeArr] = useState([])
+  // const [incomeArr, setIncomeArr] = useState([])
+  const user = useSelector(state=>state.auth.currentUser.user)
+  const incomeArr = useSelector(state=>state.income.incomeArr)
+  const dispatch = useDispatch()
+
   const getIncomeData = async() => {
-    const res = await axios.get(`http://localhost:5000/api/income/${props.data.user.userId}`,{
-      headers:{
-        "auth-token": props.data.user.token
-      }
-    })
-    if(res.status===200){
-      setIncomeArr(res.data)
-    }
-    console.log(res.data)
+    dispatch(getIncomeStart(user))
   }
   useEffect(()=>{
     getIncomeData()
@@ -26,7 +24,7 @@ const Income = (props) => {
     <div style={{padding:20, display:'flex', justifyContent:'flex-end'}}>
       <Button onClick={()=>setOpenModal(!openModal)}>Add new Income</Button>
     </div>
-    <IncomeForm openModal={openModal} setOpenModal={setOpenModal} user={props.data.user}/>
+    <IncomeForm openModal={openModal} setOpenModal={setOpenModal} user={user}/>
     <div>
       <BasicTable data={incomeArr} type='income'/>
     </div>

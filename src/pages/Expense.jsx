@@ -5,27 +5,31 @@ import Button from "@material-ui/core/Button";
 import CustomizedTables from '../components/Table';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getExpenseStart } from '../store/expense/expenseActions';
 
 
 const Expense = (props) => {
-  const [expenseArr, setExpenseArr] = useState([])
+  // const [expenseArr, setExpenseArr] = useState([])
   const [filteredExpenses, setFilteredExpenses] = useState([])
   const [openModal,setOpenModal] = useState(false)
+  const user = useSelector(state=>state.auth.currentUser.user)
+  console.log('========',user)
+  const expenseArr = useSelector(state=>state.expense.expenseArr)
+  const dispatch = useDispatch()
   const getExpenseData = async() => {
-    const res = await axios.get(`http://localhost:5000/api/expense/${props.data.user.userId}`,{
-      headers:{
-        "auth-token": props.data.user.token
-      }
-    })
-    if(res.status===200){
-      setExpenseArr(res.data)
-      setFilteredExpenses(res.data)
-    }
-    console.log(res.data)
+
+    dispatch(getExpenseStart(user))
   }
   useEffect(()=>{
     getExpenseData()
   },[openModal])
+
+   useEffect(()=>{
+      if(expenseArr.length){
+        setFilteredExpenses(expenseArr)
+      }
+   }, [expenseArr])
    
   return (
     <div style={{padding:20, display:'flex',flexDirection:'column'}}>
@@ -34,7 +38,7 @@ const Expense = (props) => {
         <Button onClick={()=>setOpenModal(!openModal)}>Add new expense</Button>
 
       </div>
-      <ExpenseForm openModal={openModal} setOpenModal={setOpenModal} user={props.data.user}/>
+      <ExpenseForm openModal={openModal} setOpenModal={setOpenModal} user={user}/>
       <div>
         <CustomizedTables data={filteredExpenses} type='expense'/>
       </div>

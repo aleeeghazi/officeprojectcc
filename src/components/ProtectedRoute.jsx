@@ -3,12 +3,13 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = (props) => {
     const Component = props.component
+    const {isLoggedIn} = props
 
    
     return (
     
     <div>
-        {props.isLoggedIn ? <Component data={props}/> : <Navigate to='/login'/>}
+        {isLoggedIn ? <Component data={props}/> : <Navigate to='/login'/>}
         
     </div>
        

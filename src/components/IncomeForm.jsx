@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { teal, grey } from "@material-ui/core/colors";
 import axios from 'axios';
+import { createIncomeStart } from '../store/income/incomeActions';
+import { useDispatch } from 'react-redux';
 
 
 const styles = theme => ({
@@ -45,7 +47,7 @@ const IncomeForm = (props) => {
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
-
+    const dispatch = useDispatch()
 
  console.log(amount, category)
   const data={
@@ -55,17 +57,9 @@ const IncomeForm = (props) => {
     date: Date.now(),
     user:props.user.userId
   }
-    const clickHandler= async ()=>{
-      const res = await axios.post("http://localhost:5000/api/income",data,{
-        headers:{
-          "auth-token": props.user.token
-        }
-      })
-      if(res.status===200){
-        props.setOpenModal(false)
-      }
-      console.log(res.data)
-    }
+  const clickHandler= async ()=>{
+    dispatch(createIncomeStart(data,props.user.token))
+  }
     const getUserCategories = async () =>{
         const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/income`,data,{
           headers:{

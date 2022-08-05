@@ -1,7 +1,6 @@
 import React, {  useState } from 'react';
+import { useSelector } from 'react-redux';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import './App.css';
-import ExpenseForm from './components/ExpenseForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 import Sidebar from './components/Sidebar';
@@ -13,21 +12,22 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 const App =()=>{
-  const [isLoggedIn,setIsLoggedIn] = useState(false)
-  const [user,setUser] = useState("a")
-  console.log('p', isLoggedIn)
+  // const [isLoggedIn,setIsLoggedIn] = useState(false)
+ 
+  const isLoggedIn = useSelector(state => state.auth.currentUser )
+  console.log(isLoggedIn)
     return (
       <BrowserRouter>
       <div style={{display:'flex',  height:'100vh'}}>
       {isLoggedIn && <Sidebar/> }
       <div style={{ flexGrow:1}}>
       <Routes>
-          <Route path='/login' element={<PublicRoute component= {Login} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} setUser={setUser}/> } />
+          <Route path='/login' element={<PublicRoute component= {Login} isLoggedIn={isLoggedIn} /> } />
           <Route path='/signup' element={<PublicRoute component={Signup} isLoggedIn={isLoggedIn}/>} />
-          <Route path='/dashboard' element={<ProtectedRoute component={Dashboard} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
-          <Route path='/expense' element={<ProtectedRoute component={Expense} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
-          <Route path='/income' element={<ProtectedRoute component={Income} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
-          <Route path='/category' element={<ProtectedRoute component={Category} isLoggedIn={isLoggedIn} user={user.userId ? user : null}/>}/>
+          <Route path='/dashboard' element={<ProtectedRoute component={Dashboard} isLoggedIn={isLoggedIn} />}/>
+          <Route path='/expense' element={<ProtectedRoute component={Expense} isLoggedIn={isLoggedIn} />}/>
+          <Route path='/income' element={<ProtectedRoute component={Income} isLoggedIn={isLoggedIn} />}/>
+          <Route path='/category' element={<ProtectedRoute component={Category} isLoggedIn={isLoggedIn} />}/>
         </Routes>
       </div>
 
