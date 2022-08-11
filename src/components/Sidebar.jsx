@@ -14,7 +14,8 @@ const dispatch =useDispatch()
   }
   const navigate = useNavigate()
     return (
-        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundImage: "linear-gradient(to top, #96fbc4 0%, #f9f586 100%)", height:'100%', justifyContent:'flex-end',position:'fixed', borderRadius:'15px'}}>
+        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundImage: "linear-gradient(to top, #96fbc4 0%, #f9f586 100%)", height:'100%', justifyContent:'space-between',position:'fixed', borderRadius:'15px'}}>
+          <h2 style={{alignSelf:'center', color:'#6A5ACD',marginTop:'25%'}}>MONEYBOOK</h2>
             <Navigation
               activeItemId="/management/members"
 
@@ -39,6 +40,10 @@ const dispatch =useDispatch()
                   title: 'Categories',
                   itemId: '/category',
   
+                },
+                {
+                  title: 'Loan',
+                  itemId: '/loan',
                 }
                 
               ]}

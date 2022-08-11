@@ -3,8 +3,7 @@ import ExpenseForm from '../components/ExpenseForm'
 import ExpenseFilter from '../components/ExpenseFilter'
 import Button from "@material-ui/core/Button";
 import CustomizedTables from '../components/Table';
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getExpenseStart } from '../store/expense/expenseActions';
 
@@ -14,7 +13,6 @@ const Expense = (props) => {
   const [filteredExpenses, setFilteredExpenses] = useState([])
   const [openModal,setOpenModal] = useState(false)
   const user = useSelector(state=>state.auth.currentUser.user)
-  console.log('========',user)
   const expenseArr = useSelector(state=>state.expense.expenseArr)
   const dispatch = useDispatch()
   const getExpenseData = async() => {
@@ -22,7 +20,9 @@ const Expense = (props) => {
     dispatch(getExpenseStart(user))
   }
   useEffect(()=>{
-    getExpenseData()
+    if(!openModal){
+      getExpenseData()
+    }
   },[openModal])
 
    useEffect(()=>{
@@ -31,9 +31,6 @@ const Expense = (props) => {
       }
    }, [expenseArr])
 
-
-
-   
   return (
     <div style={{padding:20, display:'flex',flexDirection:'column', minHeight:'100vh'}}>
       <div style={{padding:20, display:'flex', justifyContent:'space-between'}}>

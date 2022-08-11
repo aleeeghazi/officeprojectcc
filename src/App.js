@@ -8,6 +8,7 @@ import Category from './pages/Category';
 import Dashboard from './pages/Dashboard';
 import Expense from './pages/Expense';
 import Income from './pages/Income';
+import Loan from './pages/Loan';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
@@ -30,6 +31,7 @@ const App =()=>{
           <Route path='/expense' element={<ProtectedRoute component={Expense} isLoggedIn={isLoggedIn} />}/>
           <Route path='/income' element={<ProtectedRoute component={Income} isLoggedIn={isLoggedIn} />}/>
           <Route path='/category' element={<ProtectedRoute component={Category} isLoggedIn={isLoggedIn} />}/>
+          <Route path='/loan' element={<ProtectedRoute component={Loan} isLoggedIn={isLoggedIn} />}/>
         </Routes>
       </div>
 

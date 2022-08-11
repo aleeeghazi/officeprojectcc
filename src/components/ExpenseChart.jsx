@@ -64,8 +64,8 @@ useEffect(()=>{
   console.log(b)
   return (
     <div>
-      <div>
-        <h4>Expenses by category</h4>
+      <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <h4 style={{padding:30, backgroundColor:'white', borderRadius:15, width:'40%', textAlign:'center'}}>Expenses by category</h4>
         <PieChart width={500} height={300}>
             <Pie
               data={b}

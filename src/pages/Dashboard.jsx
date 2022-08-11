@@ -10,11 +10,11 @@ const Dashboard = () => {
 
   return (
     <div style={{padding:30,display:'flex',flexDirection:'column', minheight:'100vh'}}>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' ,justifyContent:'space-around'}}>
         <ExpenseChart />
         <MonthlyExpenses />
       </div>
-      <div style={{ display: 'flex', marginTop:30 }}>
+      <div style={{ display: 'flex', marginTop:30,justifyContent:'space-around' }}>
         <IncomeChart />
         <MonthlyIncome />
       </div>

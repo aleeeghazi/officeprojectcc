@@ -49,7 +49,6 @@ const ExpenseFilter = (props) => {
 
     useEffect(()=>{
         if(filter){
-            console.log("hi")
             filterResults()
         }
     }, [filter])

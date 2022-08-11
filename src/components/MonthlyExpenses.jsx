@@ -94,8 +94,8 @@ const MonthlyExpenses = () => {
 
   return (
     
-      <div style={{width:'40vw', height:'40vh'}}>
-        <h4>
+      <div style={{width:'30vw', height:'50vh',display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <h4 style={{padding:30, backgroundColor:'white', borderRadius:15, width:'40%', textAlign:'center'}}>
           Expenses by Month
         </h4>
         <ResponsiveContainer>

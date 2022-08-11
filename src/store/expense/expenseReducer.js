@@ -8,6 +8,7 @@ const INITIAL_STATE = {
 
 const expenseReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    
     case types.GET_EXPENSE_SUCCESS:
       return {
         ...state,
@@ -20,6 +21,7 @@ const expenseReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
       };
+      
       case types.CREATE_EXPENSE_SUCCESS:
         console.log(action.payload)
         return {
