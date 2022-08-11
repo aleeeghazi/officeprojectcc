@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   const navigate = useNavigate()
     return (
-        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundColor: 'gray', height:'100%', justifyContent:'center'}}>
+        <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundImage: "linear-gradient(to top, #96fbc4 0%, #f9f586 100%)", height:'100%', justifyContent:'center',position:'fixed', borderRadius:'15px'}}>
             <Navigation
               activeItemId="/management/members"
 

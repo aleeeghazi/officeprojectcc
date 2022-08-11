@@ -16,10 +16,12 @@ const ExpenseFilter = (props) => {
     switch (filter) {
         case 'day':
           const todayExpenses = props.data.filter(
-            expense =>
-              new Date(expense.date).getMonth() === currentMonth &&
-              new Date(expense.date).getDay() === currentDay &&
+            expense =>{
+              console.log(expense.date,new Date(expense.date).getDate(), currentDay)
+              return new Date(expense.date).getMonth() === currentMonth &&
+              new Date(expense.date).getDate() === currentDay &&
               new Date(expense.date).getFullYear() === currentYear
+            }
           )
           console.log('te',todayExpenses)
           props.setFilteredExpenses(todayExpenses)

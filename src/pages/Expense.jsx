@@ -30,17 +30,20 @@ const Expense = (props) => {
         setFilteredExpenses(expenseArr)
       }
    }, [expenseArr])
+
+
+
    
   return (
-    <div style={{padding:20, display:'flex',flexDirection:'column'}}>
+    <div style={{padding:20, display:'flex',flexDirection:'column', minHeight:'100vh'}}>
       <div style={{padding:20, display:'flex', justifyContent:'space-between'}}>
         <ExpenseFilter data={expenseArr} setFilteredExpenses={setFilteredExpenses}/>
         <Button onClick={()=>setOpenModal(!openModal)}>Add new expense</Button>
 
       </div>
-      <ExpenseForm openModal={openModal} setOpenModal={setOpenModal} user={user}/>
+      <ExpenseForm openModal={openModal} setOpenModal={setOpenModal} user={user} />
       <div>
-        <CustomizedTables data={filteredExpenses} type='expense'/>
+        <CustomizedTables data={filteredExpenses} type='expense' openModal={openModal} setOpenModal={setOpenModal} user={user} />
       </div>
     </div>
   )

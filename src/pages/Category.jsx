@@ -11,7 +11,6 @@ const Category= (props) => {
   const user = useSelector(state=>state.auth.currentUser.user)
   const dispatch = useDispatch()
   const categoryArr = useSelector(state=>state.category.categoryArr)
-
   const getCategoryData = async() => {
     dispatch(getCategoryStart(user))
   }
@@ -19,7 +18,7 @@ const Category= (props) => {
     getCategoryData()
   },[openModal])
   return (
-    <div style={{padding:20, display:'flex',flexDirection:'column'}}>
+    <div style={{padding:20, display:'flex',flexDirection:'column',minHeight:'100vh'}}>
     <div style={{padding:20, display:'flex', justifyContent:'flex-end'}}>
       <Button onClick={()=>setOpenModal(!openModal)}>Add new Category</Button>
     </div>

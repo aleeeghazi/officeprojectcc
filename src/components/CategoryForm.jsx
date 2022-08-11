@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withStyles, MenuItem } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { teal, grey } from "@material-ui/core/colors";
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createCategoryStart } from '../store/category/categoryActions';
 
 
@@ -58,17 +58,20 @@ const CategoryForm = (props) => {
     const [category, setCategory] = useState('');
     const [categoryType, setCategoryType] = useState('');
     const dispatch = useDispatch()
+    const user = useSelector(state=>state.auth.currentUser.user)
+
  console.log(threshold, category)
   const data={
     threshold,
     name:category,
     type:categoryType,
     createdAt: Date.now(),
-    user:props.user.userId
+    user:user.userId
   }
     const clickHandler= async ()=>{
-      dispatch(createCategoryStart(data,props.user.token))
+      dispatch(createCategoryStart(data,user.token))
     }
+
 
   return (
     <Dialog

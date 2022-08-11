@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import { teal, grey } from "@material-ui/core/colors";
 import axios from 'axios';
 import { createIncomeStart } from '../store/income/incomeActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const styles = theme => ({
@@ -48,6 +48,7 @@ const IncomeForm = (props) => {
     const [category, setCategory] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
     const dispatch = useDispatch()
+    const user = useSelector(state=>state.auth.currentUser.user)
 
  console.log(amount, category)
   const data={
@@ -55,15 +56,26 @@ const IncomeForm = (props) => {
     amount,
     category,
     date: Date.now(),
-    user:props.user.userId
+    user:user.userId
   }
   const clickHandler= async ()=>{
-    dispatch(createIncomeStart(data,props.user.token))
+    if(!props.data){
+      dispatch(createIncomeStart(data,user.token))
+
+    }else{
+      console.log('oncomee',data)
+      const res = await axios.put(`http://localhost:5000/api/income/${props.data._id}`,data,{
+      headers:{
+        "auth-token": user.token
+      }
+    }).then((res)=>props.setOpenModal(false))
+
+    }
   }
     const getUserCategories = async () =>{
-        const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/income`,data,{
+        const res = await axios.get(`http://localhost:5000/api/category/${user.userId}/income`,data,{
           headers:{
-            "auth-token": props.user.token
+            "auth-token": user.token
           }
         })
         if(res.status===200){
@@ -79,6 +91,13 @@ const IncomeForm = (props) => {
         }
       }, [props.openModal])
 
+      useEffect(()=>{
+        if(props.data){
+          setDescription(props.data?.description)
+          setAmount(props.data?.amount)
+          setCategory(props.data?.category?._id)
+        }
+      }, [props.openModal])
   return (
     <Dialog
       className={styles.root}
@@ -154,7 +173,7 @@ const IncomeForm = (props) => {
                 />
               </Grid>
               <Grid item xs={12} style={{textAlign:'center'}}>
-                <Button variant="outlined" onClick={clickHandler}>Create</Button>
+              <Button variant="outlined" onClick={clickHandler}>{props.data ? 'Update':'Create'}</Button>
               </Grid>
 
             </Grid>

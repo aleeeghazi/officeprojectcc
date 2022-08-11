@@ -17,10 +17,12 @@ const App =()=>{
   const isLoggedIn = useSelector(state => state.auth.currentUser )
   console.log(isLoggedIn)
     return (
+      <div style={{display:'flex', justifyContent:'center',alignItems:'center', height:'100%', boxSizing:'border-box',padding:0,margin:0}}>
       <BrowserRouter>
-      <div style={{display:'flex',  height:'100vh'}}>
-      {isLoggedIn && <Sidebar/> }
-      <div style={{ flexGrow:1}}>
+      
+      
+      
+      <div style={{ width:'100%',height:'100%'}}>
       <Routes>
           <Route path='/login' element={<PublicRoute component= {Login} isLoggedIn={isLoggedIn} /> } />
           <Route path='/signup' element={<PublicRoute component={Signup} isLoggedIn={isLoggedIn}/>} />
@@ -31,9 +33,10 @@ const App =()=>{
         </Routes>
       </div>
 
-      </div>
+     
 
       </BrowserRouter>
+      </div>
     );
   
 }

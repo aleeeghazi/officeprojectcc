@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createExpenseStart } from '../store/expense/expenseActions';
 
 
+
 const styles = theme => ({
     root: {
       flexGrow: 1
@@ -43,15 +44,27 @@ const styles = theme => ({
 
 
 const ExpenseForm = (props) => {
+ 
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
     const user = useSelector(state=>state.auth.currentUser.user)
     const expenseArr = useSelector(state=>state.expense.expenseArr)
+   
     const dispatch = useDispatch()
- console.log(user)
+ console.log(props.id)
+ console.log(props.data)
 
+ const getExpense = ()=>{
+  
+ }
+  useEffect(()=>{
+    if(props.id){
+      getExpense()
+    }
+    
+  },[props.id])
   const data={
     description,
     amount,
@@ -60,7 +73,16 @@ const ExpenseForm = (props) => {
     user:user.userId
   }
     const clickHandler= async ()=>{
-      dispatch(createExpenseStart(data,user.token))
+      if (!props.data){
+        dispatch(createExpenseStart(data,user.token))
+      }else{
+        console.log('dafffadad',data)
+        const res = await axios.put(`http://localhost:5000/api/expense/${props.data._id}`,data,{
+        headers:{
+          "auth-token": props.user.token
+        }
+      }).then((res)=>props.setOpenModal(false))
+      }
     }
     const getUserCategories = async () =>{
       const res = await axios.get(`http://localhost:5000/api/category/${props.user.userId}/expense`,data,{
@@ -78,6 +100,14 @@ const ExpenseForm = (props) => {
       setAmount('')
       if(props.openModal){
         getUserCategories()
+      }
+    }, [props.openModal])
+
+    useEffect(()=>{
+      if(props.data){
+        setDescription(props.data?.description)
+        setAmount(props.data?.amount)
+        setCategory(props.data?.category?._id)
       }
     }, [props.openModal])
   return (
@@ -155,7 +185,7 @@ const ExpenseForm = (props) => {
                 />
               </Grid>
               <Grid item xs={12} style={{textAlign:'center'}}>
-                <Button variant="outlined" onClick={clickHandler}>Outlined</Button>
+                <Button variant="outlined" onClick={clickHandler}>{props.data ? 'Update':'Create'}</Button>
               </Grid>
 
             </Grid>

@@ -20,7 +20,7 @@ const Income = (props) => {
     getIncomeData()
   },[openModal])
   return (
-    <div style={{padding:20, display:'flex',flexDirection:'column'}}>
+    <div style={{padding:20, display:'flex',flexDirection:'column', minHeight:'100vh'}}>
     <div style={{padding:20, display:'flex', justifyContent:'flex-end'}}>
       <Button onClick={()=>setOpenModal(!openModal)}>Add new Income</Button>
     </div>
