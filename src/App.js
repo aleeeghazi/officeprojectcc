@@ -19,10 +19,7 @@ const App =()=>{
   console.log(isLoggedIn)
     return (
       <div style={{display:'flex', justifyContent:'center',alignItems:'center', height:'100%', boxSizing:'border-box',padding:0,margin:0}}>
-      <BrowserRouter>
-      
-      
-      
+      <BrowserRouter>      
       <div style={{ width:'100%',height:'100%'}}>
       <Routes>
           <Route path='/login' element={<PublicRoute component= {Login} isLoggedIn={isLoggedIn} /> } />
@@ -34,8 +31,6 @@ const App =()=>{
           <Route path='/loan' element={<ProtectedRoute component={Loan} isLoggedIn={isLoggedIn} />}/>
         </Routes>
       </div>
-
-     
 
       </BrowserRouter>
       </div>

@@ -7,7 +7,7 @@ const PublicRoute = (props) => {
   return (
     
     <div>
-        {isLoggedIn===null ? <Component data={props}/> : <Navigate to='/expense'/>}
+        {isLoggedIn===null ? <Component data={props}/> : <Navigate to='/dashboard'/>}
         
     </div>
 

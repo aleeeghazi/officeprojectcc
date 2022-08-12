@@ -2,16 +2,27 @@ import { Button } from '@material-ui/core';
 import React from 'react'
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../store/auth/authActions';
 
 
+
 const Sidebar = () => {
 const dispatch =useDispatch()
+const loanArr = useSelector(state=>state.loan.loanArr)
   const clickHandler = () => {
     dispatch(logOut())
   }
+  // const today = Date.now()
+  // const a = () => {
+  //   const b=loanArr.filter((loan)=>{
+  //       return new Date(loan.returnDate).getTime() < today
+  //   })
+  //   return b
+  // }
+  // console.log('mmdmdm',a())
+
   const navigate = useNavigate()
     return (
         <div style={{display:'flex', flexDirection:'column',width:'20%', backgroundImage: "linear-gradient(to top, #96fbc4 0%, #f9f586 100%)", height:'100%', justifyContent:'space-between',position:'fixed', borderRadius:'15px'}}>

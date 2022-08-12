@@ -1,3 +1,4 @@
+import { Badge } from '@material-ui/core';
 import React from 'react'
 import { Navigate } from "react-router-dom";
 import Sidebar from './Sidebar';
@@ -15,7 +16,7 @@ const ProtectedRoute = (props) => {
 
         {isLoggedIn ? <Component data={props}/> : <Navigate to='/login'/>}
         </div>
-        
+
     </div>
        
     )
